@@ -34,14 +34,21 @@ pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
 # number of pages in the pdf
 numofPages = pdfReader.numPages
 
+# start the loop to read the pdf from the first page or selected page
 for pagenum in range(startpage, numofPages):
-    engine.say(f'Starting {pagenum}')
-    print('Reading page ', pagenum)
+    # printe a header to organize the text printed
+    print(pagenum, '-'*50)
+    print()
+    print()
+    # read the page from the pdf reader
     pageObj = pdfReader.getPage(pagenum)
+    # extract the text from the page obj
     page = pageObj.extractText()
+    # turn the text into lines, speech engine errors out if not
     lines = page.splitlines()
+    # feed each line into the engine.say() for reading when engine run called
     for line in lines:
         engine.say(line)
         print(line)
-        # run the engine
+    # run the engine to read lines fed in for this page
     engine.runAndWait()
