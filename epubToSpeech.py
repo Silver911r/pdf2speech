@@ -64,6 +64,7 @@ for index, chapter in enumerate(chapters):
         print('Starting Chapter ', index)
         print(text)
         print()
+        print('Ending Chapter ', index)
         print()
         engine.say(text)
         engine.runAndWait()
