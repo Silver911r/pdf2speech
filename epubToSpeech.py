@@ -56,8 +56,14 @@ for item in book.get_items():
 
 
 # loop through the chapters and turn them into text and speak the text
-for chapter in chapters[startchapter:]:
-    # read the page from the epub reader
-    text = chap2text(chapter)
-    engine.say(text)
-    engine.runAndWait()
+for index, chapter in enumerate(chapters):
+    # only play chapters higher than user request
+    if index > startchapter:
+        # read the page from the epub reader
+        text = chap2text(chapter)
+        print('Starting Chapter ', index)
+        print(text)
+        print()
+        print()
+        engine.say(text)
+        engine.runAndWait()
