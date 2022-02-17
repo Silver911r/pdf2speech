@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import pyttsx3
 import argparse
 
-# create argument parser to grab the filename
+# create argument parser to grab the filename,chapter,rate
 parser = argparse.ArgumentParser(description='Recieve Input epub')
 parser.add_argument('-f', type=str, help='the epub file to read')
 parser.add_argument('-c', type=int, help='start chapter for epub')
@@ -13,7 +13,7 @@ parser.add_argument('-r', type=int, help='rate to read the book')
 # parse arguments from command line
 args = parser.parse_args()
 
-# start the pdf at the page entered or default to 1
+# start the epub at the chpater entered or default to 1
 if args.c:
     startchapter = args.c
 else:
@@ -28,6 +28,8 @@ if args.r:
 else:
     engine.setProperty('rate', 250)
 
+# convert the epub xml to text for each chapter
+
 
 def chap2text(chap):
     blacklist = ['[document]', 'noscript', 'header',
@@ -41,19 +43,21 @@ def chap2text(chap):
     return output
 
 
+# grab the file name of the epub
 book = epub.read_epub(args.f)
 
+# create list to hold chapter objects
 chapters = []
+
+# loop through the epub items and grab the document items
 for item in book.get_items():
     if item.get_type() == ebooklib.ITEM_DOCUMENT:
         chapters.append(item.get_content())
 
 
+# loop through the chapters and turn them into text and speak the text
 for chapter in chapters[startchapter:]:
     # read the page from the epub reader
     text = chap2text(chapter)
     engine.say(text)
     engine.runAndWait()
-
-# text = chap2text(chapters[2])
-# lines = text.splitlines()
