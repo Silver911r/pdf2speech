@@ -42,5 +42,6 @@ for pagenum in range(startpage, numofPages):
     lines = page.splitlines()
     for line in lines:
         engine.say(line)
-    # run the engine
+        print(line)
+        # run the engine
     engine.runAndWait()
