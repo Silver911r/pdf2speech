@@ -36,6 +36,7 @@ numofPages = pdfReader.numPages
 
 for pagenum in range(startpage, numofPages):
     engine.say(f'Starting {pagenum}')
+    print('Reading page ', pagenum)
     pageObj = pdfReader.getPage(pagenum)
     page = pageObj.extractText()
     lines = page.splitlines()
